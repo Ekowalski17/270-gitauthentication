@@ -1,8 +1,10 @@
 const express = require('express'); //import the express library
 const bodyparser = require('body-parser'); //import body-parser
-const app = express(); //using express library to get application module
-app.use(bodyparser.json());//add body parser middleware
 const port = 3000;
+const app = express(); //using express library to get application module
+
+app.use(bodyparser.json());//add body parser middleware
+
 //listen
 app.listen(port, ()=>{
     console.log("Listening on port: "+port)
