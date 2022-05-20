@@ -19,9 +19,17 @@ app.use(bodyParser.json());//add body parser middleware and use the middleware c
 //anything else happens on each request
 
 
-app.listen(port, ()=>{
-    console.log("Listening on port: "+port)
+app.listen(port, async()=>{
+    await redisClient.connect();
+    console.log("Listening on port: "+port);
 });
+app.post('/signup', signup);
+
+const signip(request, response)=> {
+    
+    hmset(userName,password);
+}
+
 
 //validate password function
 const  validatePassword = async(request,response) => {
