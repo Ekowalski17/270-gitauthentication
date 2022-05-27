@@ -23,12 +23,7 @@ app.listen(port, async()=>{
     await redisClient.connect();
     console.log("Listening on port: "+port);
 });
-app.post('/signup', signup);
 
-const signip(request, response)=> {
-    
-    hmset(userName,password);
-}
 
 
 //validate password function
@@ -49,8 +44,20 @@ const  validatePassword = async(request,response) => {
         response.send("Unauthorized");
     }
 };
+
 app.get('/',(request,response)=>{
     response.send("Hello Elizabeth!");
 })
 
 app.post('/login', validatePassword);
+
+
+const signup = async(request,response) => {
+    const requestHashedPassword = md5(request.body.password);//get the password from the body and has it
+    const username = request.body.userName;
+    await redisClient.hSet ('passwords', username, requestHashedPassword);
+    response.status(200)
+    response.send("Successful");
+};
+
+app.post('/signup', signup);
