@@ -1,10 +1,12 @@
 const express = require('express'); //import the express library
-const port = 3000;//make a variable.  Make a constant
+const https =require('https')
+const port = 4043;//make a variable.  Make a constant
 const app = express(); //using express library to get application module
 const md5 = require ('md5'); //using express library to get application module
 const bodyParser = require('body-parser'); //import body-parser
 const {createClient} = require('redis');
 const { response } = require('express');
+const  fs = require('fs');
 const redisClient = createClient(//this creates a connection to the redis database
 {
     socket:{ //if there is a field after, you need a comma
@@ -19,11 +21,17 @@ app.use(bodyParser.json());//add body parser middleware and use the middleware c
 //anything else happens on each request
 
 
-app.listen(port, async()=>{
-    await redisClient.connect();
-    console.log("Listening on port: "+port);
-});
+https.createServer({
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.cert'),
+    passphrase: 'P@ssw0rd'
 
+}, app)
+
+app.listen(port, async () => {
+    await redisClient.connect(); //creating a TCP socket with Redis
+    console.log("Listening on port: " +port);
+})
 
 
 //validate password function
