@@ -1,6 +1,6 @@
 const express = require('express'); //import the express library
 const https =require('https')
-const port = 4043;//make a variable.  Make a constant
+const port = 443;//make a variable.  Make a constant
 const app = express(); //using express library to get application module
 const md5 = require ('md5'); //using express library to get application module
 const bodyParser = require('body-parser'); //import body-parser
@@ -26,9 +26,7 @@ https.createServer({
     cert: fs.readFileSync('server.cert'),
     passphrase: 'P@ssw0rd'
 
-}, app)
-
-app.listen(port, async () => {
+}, app).listen(port, async () => {
     await redisClient.connect(); //creating a TCP socket with Redis
     console.log("Listening on port: " +port);
 })
