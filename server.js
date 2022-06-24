@@ -8,12 +8,7 @@ const {createClient} = require('redis');
 const { response } = require('express');
 const  fs = require('fs');
 const redisClient = createClient(//this creates a connection to the redis database
-{
-    socket:{ //if there is a field after, you need a comma
-        port:6379,
-        host:"127.0.0.1",
-    }
-}
+{url: 'redis://default@10.128.0.2:6379'}
 );//this creates a connection to the redis database
 //you can not post json without a bodyParser
 
