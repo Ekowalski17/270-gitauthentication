@@ -8,7 +8,7 @@ const {createClient} = require('redis');
 const { response } = require('express');
 const  fs = require('fs');
 const redisClient = createClient(//this creates a connection to the redis database
-{url: 'redis://default@10.128.0.2:6379'}
+{url: 'redis://default:@10.128.0.2:6379'}
 );//this creates a connection to the redis database
 //you can not post json without a bodyParser
 
@@ -22,8 +22,8 @@ https.createServer({
     passphrase: 'P@ssw0rd'
 
 }, app).listen(port, async () => {
-    await redisClient.connect(); //creating a TCP socket with Redis
     console.log("Listening on port: " +port);
+    await redisClient.connect(); //creating a TCP socket with Redis
 })
 
 
