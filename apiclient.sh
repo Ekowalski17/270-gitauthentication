@@ -1,1 +1,1 @@
-curl --insecure -d "@data.json" -insecure -X POST -H "Content-Type:application/json" https://elizabeth.cit.270.com
+curl -d "@data.json"  -X POST -H "Content-Type:application/json" https://elizabeth-node.cit270.com/login
