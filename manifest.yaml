@@ -1,0 +1,58 @@
+#C 2021 Sean Murdock
+#Version of Kubernetes API we are using
+apiVersion: apps/v1
+#This can be a statefulset, or a deployment, a deployment doesn't need
+#a hard drive that sticks around
+kind: Deployment 
+metadata:
+  name: elizabeth-cit270
+spec:
+  replicas: 1 #this is how many pods you will have
+  selector:
+    matchLabels:
+      app: elizabeth-cit270
+  template:
+    metadata:
+      labels:
+        app: elizabeth-cit270
+    spec:
+      containers:
+        - name: elizabeth-cit270
+        #This is Dockerhub url to my image
+          image: "exkowalski/cit270"
+          #you can get your project id in the google cloud
+          #These are the arguments to pass to the command when...
+          command: ["npm"]
+          #these are the arguements to pass to the command when the ...
+          args: ["run","start"]
+          #This is the port my container is listening on, ex: 443
+          ports:
+            - containerPort: 443
+          resources:
+            limits:
+            #this is the max CPU (in cores) my container can use
+              cpu: ".5"
+            #this is teh max memory (in Magabytes)
+              memory: "500Mi"
+            requests:
+            #This is the minimum (in core) my container can use
+              cpu: ".1"
+            #this is the minimum (in Megabytes)
+              memory: "250Mi"
+          livenessProbe:
+            httpGet:
+            #This is the url to call to see if my API has running
+              path: /
+            #This is the port to use to see if my API has running
+              port: 443
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+            #This is the url to call to see if my APU has started
+              path: /
+            #This is the url to see if my API has started
+              port: 443
+            initialDelaySeconds: 3
+            periodSeconds: 3
+            
