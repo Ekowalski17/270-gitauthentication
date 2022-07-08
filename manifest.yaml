@@ -20,8 +20,7 @@ spec:
         - name: elizabeth-cit270
         #This is Dockerhub url to my image
           image: "exkowalski/cit270"
-          #you can get your project id in the google cloud
-          #These are the arguments to pass to the command when...
+          #This is teh command to run once the container has started
           command: ["npm"]
           #these are the arguements to pass to the command when the ...
           args: ["run","start"]
@@ -31,7 +30,7 @@ spec:
           resources:
             limits:
             #this is the max CPU (in cores) my container can use
-              cpu: ".5"
+              cpu: ".125"
             #this is teh max memory (in Magabytes)
               memory: "500Mi"
             requests:
@@ -45,14 +44,32 @@ spec:
               path: /
             #This is the port to use to see if my API has running
               port: 443
-            initialDelaySeconds: 3
-            periodSeconds: 3
+            #this is the protocol to use to check if my API is running
+              scheme: HTTPS
+          initialDelaySeconds: 3
+          periodSeconds: 3
           readinessProbe:
             httpGet:
             #This is the url to call to see if my APU has started
               path: /
             #This is the url to see if my API has started
               port: 443
+            #This is teh protocol to use to check if my API has started
+              scheme: HTTPS
             initialDelaySeconds: 3
             periodSeconds: 3
-            
+
+#This is the start of a new document for the Load Balancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: exkowalski/cit270-loadbalancer
+spec:
+  selector:
+    app: exkowalski/cit270
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 3000
+
