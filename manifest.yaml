@@ -46,8 +46,8 @@ spec:
               port: 443
             #this is the protocol to use to check if my API is running
               scheme: HTTPS
-          initialDelaySeconds: 3
-          periodSeconds: 3
+            initialDelaySeconds: 3
+            periodSeconds: 3
           readinessProbe:
             httpGet:
             #This is the url to call to see if my APU has started
