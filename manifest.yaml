@@ -64,12 +64,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: exkowalski/cit270-loadbalancer
+  name: exkowalski-cit270-loadbalancer
 spec:
   selector:
-    app: exkowalski/cit270
+    app: elizabeth-cit270
   type: LoadBalancer
   ports:
-  - port: 80
-    targetPort: 3000
+  - port: 443
+    targetPort: 433
 
