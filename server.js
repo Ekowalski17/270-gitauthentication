@@ -1,6 +1,6 @@
 const express = require('express'); //import the express library
 const https =require('https')
-const port = 443;//make a variable.  Make a constant
+const port = 3000;//make a variable.  Make a constant
 const app = express(); //using express library to get application module
 const md5 = require ('md5'); //using express library to get application module
 const bodyParser = require('body-parser'); //import body-parser
@@ -16,16 +16,20 @@ app.use(bodyParser.json());//add body parser middleware and use the middleware c
 //anything else happens on each request
 
 
-https.createServer({
-    key: fs.readFileSync('server.key'),
-    cert: fs.readFileSync('server.cert'),
-    passphrase: 'P@ssw0rd'
+// https.createServer({
+//     key: fs.readFileSync('server.key'),
+//     cert: fs.readFileSync('server.cert'),
+//     passphrase: 'P@ssw0rd'
 
-}, app).listen(port, async () => {
-    console.log("Listening on port: " +port);
-    await redisClient.connect(); //creating a TCP socket with Redis
+// }, app).listen(port, async () => {
+//     console.log("Listening on port: " +port);
+//     await redisClient.connect(); //creating a TCP socket with Redis
+// })
+
+app.listen(port,async()=>{
+    await redisClient.connect();
+    console.log("listening on port: ", port);
 })
-
 
 //validate password function
 const  validatePassword = async(request,response) => {
